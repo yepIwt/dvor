@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title%}All Users{% endblock %}
+{% block content%}
+<h1>Registered:</h1>
+<br>
+{% if users %}
+    {% for user in users %}
+        <h2>{{user.username}}</h2>
+    {% endfor %}
+{% else %}
+    <h2>Нет пользователей</h2>
+{% endif %}
+{% endblock %}
