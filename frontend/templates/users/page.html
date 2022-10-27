@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title%}
+	{{ usr.username }}
+{% endblock %}
+
+{% block content%}
+	{% if usr.profile.online %}
+		<h5>В сети</h5>
+	{% else %}
+		<b>Был в сети в </b> {{ usr.last_login }}
+	{% endif %}
+	<hr>
+
+	<h1>Профиль</h1>
+	<p> Адрес: {{usr.profile.address}} </p>
+	<p> Почта: {{usr.email}} </p>
+	<p> Пол: 
+		{% if usr.profile.sex %}
+			Мужской
+		{% else %}
+			Женский
+		{% endif %}
+	</p>
+	<p> Дата рождения: {{ usr.profile.bthd }}</p>
+	<b>Дата регистрации: </b> {{ usr.date_joined}}
+{% endblock %}

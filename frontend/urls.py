@@ -5,5 +5,8 @@ from . import views
 app_name = 'frontend'
 
 urlpatterns = [
-    path('', views.all_users, name = 'all users'),
+	path('all/', views.all_users, name = 'all_users'),
+	path('<str:username>', views.user, name='user'),
+	path('r/', views.registration, name = 'registration'),
+	path('r/comp/', views.complete_registration, name = 'complete')
 ]

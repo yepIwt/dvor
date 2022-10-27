@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
-{% block title%}All Users{% endblock %}
+{% block title%}
+    Все пользователи
+{% endblock %}
+
 {% block content%}
-<h1>Registered:</h1>
-<br>
-{% if users %}
-    {% for user in users %}
-        <h2>{{user.username}}</h2>
-    {% endfor %}
-{% else %}
-    <h2>Нет пользователей</h2>
-{% endif %}
+    <h1>Зарегистрированны:</h1>
+    {% if users %}
+        {% for user2 in users %}
+            {% if user.username == user2.username %}
+                <h2 style="color: green">{{user2.username}}</h2>
+            {% else %}
+                <h2>{{user2.username}}</h2>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <h2>Нет пользователей</h2>
+    {% endif %}
 {% endblock %}
