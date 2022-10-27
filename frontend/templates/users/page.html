@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block content%}
+
+	{% if user.username == usr.username %}
+		<h1>Это вы!</h1>
+		<a href="{% url 'frontend:logout_page' %}">Выйти</a>
+		<br>
+	{% endif %}
+
 	{% if usr.profile.online %}
 		<h5>В сети</h5>
 	{% else %}

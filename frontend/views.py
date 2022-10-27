@@ -1,12 +1,13 @@
+from urllib.parse import parse_qsl
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse
 
 
 from core.models import Profile
-from core.forms import RegistrationForm, CompleteRegistrationForm
+from core.forms import RegistrationForm, CompleteRegistrationForm, LoginForm
 
 # Create your views here. Okay.
 
@@ -53,3 +54,22 @@ def user(request, username):
 
 	contex = {'usr': user}
 	return render(request,'users/page.html',contex)
+
+def login_page(request):
+
+	form = LoginForm(request.POST or None); err = False
+	if request.POST and form.is_valid():
+		username = form.cleaned_data['username']
+		password = form.cleaned_data['password']
+
+		user = authenticate(request=request, username = username, password = password)
+		if user is not None:
+			login(request, user)
+			return HttpResponseRedirect(reverse("frontend:user", args = [user.username]))
+		else:
+			err = True
+	return render(request,'users/login_page.html',{'form':form, 'err': err})
+
+def logout_page(request):
+	logout(request)
+	return HttpResponseRedirect(reverse("frontend:all_users"))

@@ -78,3 +78,23 @@ class CompleteRegistrationForm(forms.Form):
 			raise forms.ValidationError('Вход только с 15')
 
 		return self.cleaned_data
+
+class LoginForm(forms.Form):
+	username = forms.CharField(label="Имя пользователя", max_length =100)
+	password = forms.CharField(widget=forms.PasswordInput())
+	class Meta:
+		model = User
+		fields = (
+			'__all__'
+		)
+	
+	def clean(self):
+		username = self.cleaned_data['username']
+		password = self.cleaned_data['password']
+
+		# Check username exist
+		username_taken = User.objects.filter(username = username)
+		if not username_taken:
+			raise forms.ValidationError({'username':["Такого ника нет."]})
+		
+		return self.cleaned_data
